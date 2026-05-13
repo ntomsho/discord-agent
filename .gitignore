@@ -1,0 +1,27 @@
+# Environment / secrets — never commit these
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.js.map
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS clutter
+.DS_Store
+Thumbs.db
+
+# Workspace contents — keep the folder, ignore everything inside it
+workspace/**
+!workspace/.gitkeep
