@@ -14,6 +14,10 @@ const ALL_TOOLS: Anthropic.Tool[] = [
 // It persists for the lifetime of the process.
 const messages: Anthropic.MessageParam[] = [];
 
+export function clearMessages(): void {
+  messages.length = 0;
+}
+
 async function dispatchTool(name: string, input: Record<string, any>): Promise<string> {
   const result =
     (await dispatchFsTool(name, input)) ??
@@ -33,7 +37,7 @@ export async function runTurn(userInput: string): Promise<string> {
     const response = await client.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 8096,
-      system: SYSTEM_PROMPT,
+      system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
       tools: ALL_TOOLS,
       messages,
     });

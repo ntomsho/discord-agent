@@ -1,5 +1,5 @@
 import readline from 'readline';
-import { runTurn } from './agent.js';
+import { runTurn, clearMessages } from './agent.js';
 
 // Validate required environment variable at startup.
 if (!process.env.ANTHROPIC_API_KEY) {
@@ -28,8 +28,8 @@ function prompt(): void {
     }
 
     if (trimmed === '/clear') {
-      // Reimport and reinitialise would clear context; for now just advise.
-      console.log('Restart the process to clear the conversation context.');
+      clearMessages();
+      console.log('Context cleared.');
       prompt();
       return;
     }

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\(\"C:\\\\Users\\\\ntoms\\\\Downloads\\\\Public_Access_Character_S_fonts\\\\TYUSMB+NarlyOT-Regular.ttf\"\\); \"data:font/truetype;base64,\" + [Convert]::ToBase64String\\($bytes\\))"
+    ]
+  }
+}

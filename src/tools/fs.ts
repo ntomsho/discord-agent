@@ -33,6 +33,16 @@ async function writeFile(args: { path: string; content: string }): Promise<strin
   }
 }
 
+async function deleteFile(args: { path: string }): Promise<string> {
+  const fullPath = safePath(args.path);
+  try {
+    await fs.unlink(fullPath);
+    return `Successfully deleted ${args.path}`;
+  } catch (e: any) {
+    return `Error deleting file: ${e.message}`;
+  }
+}
+
 async function listDirectory(args: { path?: string }): Promise<string> {
   const fullPath = safePath(args.path ?? '.');
   try {
@@ -83,6 +93,20 @@ export const fsToolDefinitions: Anthropic.Tool[] = [
     },
   },
   {
+    name: 'delete_file',
+    description: 'Delete a file from the workspace directory.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        path: {
+          type: 'string',
+          description: 'File path relative to workspace/ (e.g. "src/old.ts")',
+        },
+      },
+      required: ['path'],
+    },
+  },
+  {
     name: 'list_directory',
     description: 'List the files and subdirectories inside a workspace directory.',
     input_schema: {
@@ -109,6 +133,8 @@ export async function dispatchFsTool(
       return readFile(input as { path: string });
     case 'write_file':
       return writeFile(input as { path: string; content: string });
+    case 'delete_file':
+      return deleteFile(input as { path: string });
     case 'list_directory':
       return listDirectory(input as { path?: string });
     default:
